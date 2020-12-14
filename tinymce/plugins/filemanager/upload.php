@@ -19,6 +19,12 @@ if (!empty($_FILES) && $upload_files) {
     $targetPath = dirname( __FILE__ ) . $ds. $storeFolder . $ds; 
     $targetPathThumb = dirname( __FILE__ ) . $ds. $storeFolderThumb . $ds; 
      
+    // Reject uploading of non-allowed file-endings	
+    $file_ending = strtolower(substr(strrchr($_FILES['file']['name'],'.'),1));
+    if(!in_array($file_ending, $ext)) {
+      die();
+    }
+	
     $targetFile =  $targetPath. $_FILES['file']['name']; 
     $targetFileThumb =  $targetPathThumb. $_FILES['file']['name']; 
     move_uploaded_file($tempFile,$targetFile);
